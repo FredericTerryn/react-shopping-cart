@@ -16,6 +16,11 @@ class App extends React.Component {
     }
   }
 
+  removeFromCart = (product) => {
+    const cartItems = this.state.cartItems.slice();
+    this.setState({ cartItems: cartItems.filter(x => x._id !== product._id) })
+  }
+
   addToCart = (product) => {
     const cartItems = this.state.cartItems.slice();
     let alreadyInCart = false;
@@ -30,7 +35,7 @@ class App extends React.Component {
     if (!alreadyInCart) {
       cartItems.push({ ...product, count: 1 })
     }
-    this.setState({cartItems});
+    this.setState({ cartItems });
   }
 
   sortProducts = (event) => {
@@ -85,7 +90,10 @@ class App extends React.Component {
               </Products>
             </div>
             <div className="sidebar">
-              <Cart cartItems={this.state.cartItems}></Cart>
+              <Cart
+                cartItems={this.state.cartItems}
+                removeFromCart={this.removeFromCart}
+              ></Cart>
             </div>
           </div>
         </main>
